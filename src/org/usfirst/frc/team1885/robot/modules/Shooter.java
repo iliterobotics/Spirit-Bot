@@ -29,7 +29,7 @@ public class Shooter implements Module {
 	}
 	
 	public boolean dump() {
-		
+		return true;
 	}
 	
 	public void setOutput(double output) {
