@@ -10,7 +10,6 @@ public class PressureSensor implements Module{
 
     public static final int AIO_PORT = 1;
     
-    private Relay relay;
 	private AnalogInput aio;
     private double voltageReadout;
     private final double supplyVoltage = 5;
@@ -29,10 +28,10 @@ public class PressureSensor implements Module{
 		return true;
 	}
 	
-	public double getPSI(double voltageReadout)
+	public double getPSI()
 	{
-		double pressure = 25 * ( voltageReadout/supplyVoltage ) - 25;
+		double pressure = 250 * ( voltageReadout/supplyVoltage ) - 25;
 		return pressure;
 	}
 	
-}
+} 
