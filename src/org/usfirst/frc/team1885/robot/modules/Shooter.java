@@ -26,8 +26,8 @@ public class Shooter implements Module {
 	public void init() {
 		this.angle = pot.getAngle();
 		angleMotor = new Talon(2);
-		this.shootRelay = new Relay(0);
-		this.dumpRelay = new Relay(1);
+		this.shootRelay = new Relay(1);
+		this.dumpRelay = new Relay(0);
 
 	}
 
@@ -59,8 +59,7 @@ public class Shooter implements Module {
 			shootRelay.set(Relay.Value.kOn);// On state.
 			double startTime = System.currentTimeMillis();
 			double duration = 1000;//duration for relay to be on.
-			while (System.currentTimeMillis() - startTime < duration);
-			shootRelay.set(Relay.Value.kOff);// Off state.
+			if (duration > System.currentTimeMillis() - startTime)shootRelay.set(Relay.Value.kOff);// Off state.
 			return true;
 		} 
 		else {
