@@ -7,13 +7,19 @@ public class Shooter implements Module {
 	private Talon angleMotor;
 	private PressureSensor pressureSensor;
 	private Potentiometer pot;
-	private Relay relay;
+	private Relay shootRelay;
+	private Relay dumpRelay;
 	private double angle;
+	public static final double LIMIT_1;//first angle limit
+	public static final double LIMIT_2;//second angle limit
+	//Red thigns are mosfet transistors for controlling white dpdts.
 	
 	public Shooter(PressureSensor pressureSensor, Potentiometer pot) {
 		this.pressureSensor = pressureSensor;
 		this.pot = pot;
-
+		this.shootRelay = new Relay(0);
+		this.dumpRelay = new Relay(1);
+		
 	}
 	@Override
 	public void init() {
@@ -25,6 +31,7 @@ public class Shooter implements Module {
 	@Override
 	public boolean update() {
 		this.angle = pot.getAngle();
+		
 		return false;
 	}
 	
@@ -32,10 +39,13 @@ public class Shooter implements Module {
 		
 	}
 	
+	public boolean shoot()
+	{
+		
+	}
 	public void setOutput(double output) {
-		double limit1, limit2;
 		double threshold = 5;
-		if(Math.abs(angle - limit1)  < threshold || Math.abs(angle - limit2) < threshold)
+		if(Math.abs(angle - LIMIT_1)  < threshold || Math.abs(angle - LIMIT_2) < threshold)
 		{
 			angleMotor.set(0);//Won't turn motor when the angle is close to limit angles.
 		}
