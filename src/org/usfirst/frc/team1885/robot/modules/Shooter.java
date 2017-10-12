@@ -41,5 +41,10 @@ public class Shooter implements Module {
 		}
 		angleMotor.set(output);
 	}
+	
+	public Talon getTalon()
+	{
+		return angleMotor;
+	}
 
 }
