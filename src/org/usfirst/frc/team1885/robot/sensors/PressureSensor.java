@@ -2,9 +2,7 @@ package org.usfirst.frc.team1885.robot.sensors;
 
 import org.usfirst.frc.team1885.robot.modules.Module;
 
-import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.*;
 
 public class PressureSensor implements Module{
     
@@ -31,9 +29,9 @@ public class PressureSensor implements Module{
 		return true;
 	}
 	
-	public double getPSI(voltageReadout)
+	public double getPSI(double voltageReadout)
 	{
-		double pressure = 25(voltageReadout/supplyVoltage) - 25;
+		double pressure = 25 * ( voltageReadout/supplyVoltage ) - 25;
 		return pressure;
 	}
 	
