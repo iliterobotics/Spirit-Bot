@@ -1,6 +1,8 @@
 package org.usfirst.frc.team1885.robot.modules;
 
 import org.usfirst.frc.team1885.robot.sensors.*;
+
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Talon;
 
@@ -12,13 +14,15 @@ public class Shooter implements Module {
 	private Relay shootRelay;
 	private Relay dumpRelay;
 	private double angle;
+	private DigitalInput limitSwitch;
 	public static final double PSI_THRESHOLD = 60;
-	public static final double LIMIT_1 = 0;// first angle limit
-	public static final double LIMIT_2 = 0;// second angle limit
+	//public static final double LIMIT_1;// first angle limit
+	//public static final double LIMIT_2;// second angle limit
 
 	public Shooter(PressureSensor pressureSensor, Potentiometer pot) {
 		this.pressureSensor = pressureSensor;
 		this.pot = pot;
+		
 
 	}
 
@@ -28,6 +32,7 @@ public class Shooter implements Module {
 		angleMotor = new Talon(2);
 		this.shootRelay = new Relay(1);
 		this.dumpRelay = new Relay(0);
+		this.limitSwitch = new DigitalInput(1);
 
 	}
 
@@ -59,7 +64,7 @@ public class Shooter implements Module {
 			shootRelay.set(Relay.Value.kOn);// On state.
 			double startTime = System.currentTimeMillis();
 			double duration = 1000;//duration for relay to be on.
-			if (duration > System.currentTimeMillis() - startTime)shootRelay.set(Relay.Value.kOff);// Off state.
+			while (System.currentTimeMillis() - startTime < duration);// Off state.
 			return true;
 		} 
 		else {
@@ -69,10 +74,16 @@ public class Shooter implements Module {
 
 	public void setOutput(double output) {
 		double threshold = 5;
-		if (Math.abs(angle - LIMIT_1) < threshold || Math.abs(angle - LIMIT_2) < threshold) {
-			angleMotor.set(0);// Won't turn motor when the angle is close to limit angles.
+		/*
+		if(Math.abs(angle - LIMIT_1) < threshold || Math.abs(angle - LIMIT_2) < threshold)
+		{
+			angleMotor.set(0);
+		}
+		*/
+		if(!limitSwitch.get()) {
+			angleMotor.set(0);
 		}
 		angleMotor.set(output);
 	}
-
+    
 }
