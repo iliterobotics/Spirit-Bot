@@ -46,6 +46,27 @@ public class DriverControl implements Module{
 		double left = throttle - turn;
 		double right = throttle + turn;
 		drivetrain.setSpeeds(left, right);
+		if(gamepad.getRawAxis(GAMEPAD_RIGHT_TRIGGER)>0.5)
+		{
+			shooter.shoot();
+		}
+		if(gamepad.getRawAxis(GAMEPAD_LEFT_TRIGGER)>0.5)
+		{
+			shooter.dump();
+		}
+		if(gamepad.getRawButton(GAMEPAD_Y_BUTTON))
+		{
+			shooter.setOutput(1);
+		}
+		else if(gamepad.getRawButton(GAMEPAD_A_BUTTON))
+		{
+			shooter.setOutput(-1);
+		}
+		else
+		{
+			shooter.setOutput(0);
+		}
+		
 		
 		return false;
 	}
