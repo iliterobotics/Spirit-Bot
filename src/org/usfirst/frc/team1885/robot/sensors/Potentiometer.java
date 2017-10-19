@@ -10,14 +10,12 @@ public class Potentiometer
 	private AnalogInput input;
 	private int angle;
 	private final int PORT = 2;
-	private Talon angleMotor;
 	private Shooter myShooter;
 	private double voltage;
 	
 	public Potentiometer(Shooter s)
 	{
 		myShooter = s;
-		angleMotor = myShooter.getTalon();
 	}
 	
 	public double cvtToAngle(double voltage)
@@ -26,7 +24,7 @@ public class Potentiometer
 		//We will test later.
 	}
 	
-	public int setAngle(int degree)
+	public void setAngle(int degree)
 	{
 		//calculate how much power for how many degrees.
 	}
@@ -50,7 +48,6 @@ public class Potentiometer
 	public void update()
 	{
 		System.out.println(getVoltage());
-	}
 	}
 	
 }

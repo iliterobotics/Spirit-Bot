@@ -14,7 +14,10 @@ public class DriverControl implements Module{
 	public static final int GAMEPAD_RIGHT_X = 4;
 	public static final int GAMEPAD_RIGHT_Y = 5;
 	public static final int GAMEPAD_A_BUTTON = 1;
+	public static final int GAMEPAD_B_BUTTON = 2;
 	public static final int GAMEPAD_Y_BUTTON = 4;
+	public static final int GAMEPAD_DPAD_UP = 0;
+	public static final int GAMEPAD_DPAD_DOWN = 0;
 	
 	
 	public final int CONTROLLER_ID = 0;
@@ -28,20 +31,16 @@ public class DriverControl implements Module{
 		this.shooter = shooter;
 	}
 	
+	public DriverControl(DriveTrain drivetrain) {
+		this.drivetrain = drivetrain;
+	}
+	
 	public void init() {
 		gamepad = new Joystick(CONTROLLER_ID);
 	}
 	
 	public boolean update() {
-		
-		if(isOutsideDeadzone(GAMEPAD_RIGHT_TRIGGER, TRIGGER_DEADZONE) && isOutsideDeadzone(GAMEPAD_RIGHT_TRIGGER, TRIGGER_DEADZONE) && gamepad.getRawButton(GAMEPAD_A_BUTTON)) {
-			if(shooter.shoot()) {
-				DriverStation.reportError("Firing.", false);
-			} else {
-				DriverStation.reportError("Not Firing.", false);
-			}
-		}
-		
+
 		double throttle = gamepad.getRawAxis(GAMEPAD_LEFT_Y);
 		double turn = gamepad.getRawAxis(GAMEPAD_RIGHT_X);
 		double left = throttle - turn;

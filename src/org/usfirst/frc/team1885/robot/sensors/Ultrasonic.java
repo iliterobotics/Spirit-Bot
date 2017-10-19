@@ -5,7 +5,7 @@ public class Ultrasonic
 {
 	private static final double SCALE_FACTOR = 0.2; //needs to be tested
 	private AnalogInput analogInput;
-	private static final int PORT;
+	private static final int PORT = 0;
 	private double voltage;
 	
 	public Ultrasonic(int port)
