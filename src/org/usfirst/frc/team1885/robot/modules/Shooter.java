@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Talon;
 
 public class Shooter implements Module {
-
+    
 	private Talon angleMotor;
 	private PressureSensor pressureSensor;
 	private Potentiometer pot;
@@ -39,7 +39,6 @@ public class Shooter implements Module {
 	@Override
 	public boolean update() {
 		this.angle = pot.getAngle();
-
 		return false;
 	}
 
@@ -48,10 +47,6 @@ public class Shooter implements Module {
 		if (pressureSensor.getPSI() <= PSI_THRESHOLD) {
 
 			dumpRelay.set(Relay.Value.kOn);// On state.
-			double startTime = System.currentTimeMillis();
-			double duration = 1000;//duration for relay to be on.
-			while (System.currentTimeMillis() - startTime < duration);
-			dumpRelay.set(Relay.Value.kOff);// Off state.
 			return true;
 		}
 		else {
@@ -62,14 +57,19 @@ public class Shooter implements Module {
 	public boolean shoot() {
 		if (pressureSensor.getPSI() >= PSI_THRESHOLD) {
 			shootRelay.set(Relay.Value.kOn);// On state.
-			double startTime = System.currentTimeMillis();
-			double duration = 1000;//duration for relay to be on.
-			while (System.currentTimeMillis() - startTime < duration);// Off state.
 			return true;
 		} 
 		else {
 			return false;
 		}
+	}
+	public void shootRelayOff()
+	{
+		shootRelay.set(Relay.Value.kOff);
+	}
+	public void dumpRelayOff()
+	{
+		dumpRelay.set(Relay.Value.kOff);
 	}
 
 	public void setOutput(double output) {

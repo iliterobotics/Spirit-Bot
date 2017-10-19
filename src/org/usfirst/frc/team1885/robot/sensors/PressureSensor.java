@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.*;
 
 public class PressureSensor implements Module{
     
-	public static final double PSI_PER_VOLTAGE = 1;
+	//public static final double PSI_PER_VOLTAGE = 1;
 
     public static final int AIO_PORT = 1;
     
