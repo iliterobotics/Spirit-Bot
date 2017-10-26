@@ -1,11 +1,12 @@
 package org.usfirst.frc.team1885.robot.sensors;
 
+import org.usfirst.frc.team1885.robot.modules.Module;
 import org.usfirst.frc.team1885.robot.modules.Shooter;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Talon;
 
-public class Potentiometer 
+public class Potentiometer implements Module
 {
 	private AnalogInput input;
 	private double angle;
@@ -37,10 +38,11 @@ public class Potentiometer
 	}
 
 	
-	public void update()
+	public boolean update()
 	{
 		voltage = input.getVoltage();
 		cvtToAngle(voltage);
+		return true;
 	}
 	
 }
