@@ -21,7 +21,6 @@ public class DriverControl implements Module{
 	public static final int GAMEPAD_Y_BUTTON = 4;
 	public static final int GAMEPAD_DPAD_UP = 0;
 	public static final int GAMEPAD_DPAD_DOWN = 0;
-	public static final int GAMEPAD_RIGHT_BUMPER = 5;
 	
 	public final int CONTROLLER_ID = 0;
 	
@@ -72,35 +71,28 @@ public class DriverControl implements Module{
 		
 		if(gamepad.getRawAxis(GAMEPAD_RIGHT_TRIGGER)>0.5)
 		{
+			blowHorn();
 			shooter.shoot();
 		}
 		else {
+			hornRelayOff();
 			shooter.shootRelayOff();
 		}
 		
-		if(gamepad.getRawAxis(GAMEPAD_LEFT_TRIGGER)>0.5)
+		if(gamepad.getRawAxis(GAMEPAD_LEFT_TRIGGER) > 0.5)
 		{
 			shooter.dump();
 		}
 		else {
 			shooter.dumpRelayOff();
 		}
-		if(gamepad.getRawButton(GAMEPAD_RIGHT_BUMPER)){
-			
-			blowHorn();
-		}
-		else
-		{
-			hornRelayOff();
-		}
-		
 		if(gamepad.getRawButton(GAMEPAD_Y_BUTTON))
 		{
-			shooter.setOutput(1);
+			shooter.setOutput(1); //Move shooter up.
 		}
 		else if(gamepad.getRawButton(GAMEPAD_A_BUTTON))
 		{
-			shooter.setOutput(-1);
+			shooter.setOutput(-1);//Move shooter down.
 		}
 		else
 		{

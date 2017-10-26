@@ -43,15 +43,9 @@ public class Shooter implements Module {
 	}
 
 	public boolean dump() {
-
-		if (pressureSensor.getPSI() <= PSI_THRESHOLD) {
-
 			dumpRelay.set(Relay.Value.kOn);// On state.
 			return true;
-		}
-		else {
-			return false;
-		}
+		
 	}
 
 	public boolean shoot() {
