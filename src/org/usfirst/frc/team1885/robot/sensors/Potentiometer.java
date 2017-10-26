@@ -8,46 +8,39 @@ import edu.wpi.first.wpilibj.Talon;
 public class Potentiometer 
 {
 	private AnalogInput input;
-	private int angle;
+	private double angle;
 	private final int PORT = 2;
 	private Shooter myShooter;
 	private double voltage;
+	public static final int OFFSET = 20, MAX_VOLTAGE = 5; //needs to be checked
 	
 	public Potentiometer(Shooter s)
 	{
 		myShooter = s;
 	}
 	
-	public double cvtToAngle(double voltage)
+	public void init()
 	{
-		return 0;
+		input = new AnalogInput(PORT);
+	}
+	
+	public void cvtToAngle(double voltage)
+	{
+		angle = (voltage / MAX_VOLTAGE) * 340 + OFFSET;
 		//We will test later.
 	}
 	
-	public void setAngle(int degree)
-	{
-		//calculate how much power for how many degrees.
-	}
-	
-	public void control()
-	{
-		
-	}
-
 	public double getAngle() 
 	{
+		update();
 		return angle;
 	}
-	
-	public double getVoltage()
-	{
-		voltage = input.getVoltage();
-		return voltage;
-	}
+
 	
 	public void update()
 	{
-		System.out.println(getVoltage());
+		voltage = input.getVoltage();
+		cvtToAngle(voltage);
 	}
 	
 }
