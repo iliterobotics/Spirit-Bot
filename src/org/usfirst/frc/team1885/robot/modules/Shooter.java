@@ -22,18 +22,18 @@ public class Shooter implements Module {
 	public Shooter(PressureSensor pressureSensor, Potentiometer pot) {
 		this.pressureSensor = pressureSensor;
 		this.pot = pot;
-		
+		angleMotor = new Talon(2);
+		this.shootRelay = new Relay(1);
+		this.dumpRelay = new Relay(0);
+		this.limitSwitch = new DigitalInput(1);
+
 
 	}
 
 	@Override
 	public void init() {
 		this.angle = pot.getAngle();
-		angleMotor = new Talon(2);
-		this.shootRelay = new Relay(1);
-		this.dumpRelay = new Relay(0);
-		this.limitSwitch = new DigitalInput(1);
-
+		
 	}
 
 	@Override
