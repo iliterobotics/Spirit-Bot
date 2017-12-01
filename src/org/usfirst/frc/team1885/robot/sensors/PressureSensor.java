@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1885.robot.sensors;
 
+import org.usfirst.frc.team1885.robot.Constants;
 import org.usfirst.frc.team1885.robot.modules.Module;
 
 import edu.wpi.first.wpilibj.*;
@@ -21,7 +22,7 @@ public class PressureSensor implements Module{
     
 	public PressureSensor() {
         aio = new AnalogInput(AIO_PORT);
-        ledRelay = new Relay(3);
+        ledRelay = new Relay(Constants.LED_RELAY);
     }
 	
 	public void init() {

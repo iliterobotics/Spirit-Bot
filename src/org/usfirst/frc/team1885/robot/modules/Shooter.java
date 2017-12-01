@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1885.robot.modules;
 
+import org.usfirst.frc.team1885.robot.Constants;
 import org.usfirst.frc.team1885.robot.sensors.*;
 
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -8,7 +9,7 @@ import edu.wpi.first.wpilibj.Talon;
 
 public class Shooter implements Module {
     
-	private Talon angleMotor;
+	private Talon elevateMotor;
 	private PressureSensor pressureSensor;
 	private Potentiometer pot;
 	private Relay shootRelay;
@@ -22,10 +23,10 @@ public class Shooter implements Module {
 	public Shooter(PressureSensor pressureSensor, Potentiometer pot) {
 		this.pressureSensor = pressureSensor;
 		this.pot = pot;
-		angleMotor = new Talon(2);
-		this.shootRelay = new Relay(1);
-		this.dumpRelay = new Relay(0);
-		this.limitSwitch = new DigitalInput(1);
+		elevateMotor = new Talon(Constants.TALON_PWM_PORT_ELEVATE);
+		this.shootRelay = new Relay(Constants.RELAY_PORT_SHOOTER);
+		this.dumpRelay = new Relay(Constants.RELAY_PORT_DUMP);
+		this.limitSwitch = new DigitalInput(Constants.DIO_PORT_ELEVATION_LIMIT_SWITCH);
 
 
 	}
