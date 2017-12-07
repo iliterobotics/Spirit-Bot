@@ -1,37 +1,23 @@
 package org.usfirst.frc.team1885.robot.sensors;
 
-import org.usfirst.frc.team1885.robot.modules.Shooter;
+import org.usfirst.frc.team1885.robot.Constants;
 
 import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.Talon;
 
 public class Potentiometer 
 {
 	private AnalogInput input;
 	private int angle;
-	private final int PORT = 2;
-	private Shooter myShooter;
 	private double voltage;
 	
-	public Potentiometer(Shooter s)
+
+	public Potentiometer()
 	{
-		myShooter = s;
+		input = new AnalogInput(Constants.ANALOG_PORT_ELEVATION);
 	}
-	
-	public double cvtToAngle(double voltage)
+	public void cvtToAngle(double voltage)
 	{
-		return 0;
-		//We will test later.
-	}
-	
-	public void setAngle(int degree)
-	{
-		//calculate how much power for how many degrees.
-	}
-	
-	public void control()
-	{
-		
+		angle = 0;
 	}
 
 	public double getAngle() 

@@ -7,11 +7,12 @@ import org.usfirst.frc.team1885.robot.modules.DriveTrain;
 import org.usfirst.frc.team1885.robot.modules.DriverControl;
 import org.usfirst.frc.team1885.robot.modules.Module;
 import org.usfirst.frc.team1885.robot.modules.Shooter;
+import org.usfirst.frc.team1885.robot.sensors.Potentiometer;
 import org.usfirst.frc.team1885.robot.sensors.PressureSensor;
 
 import edu.wpi.first.wpilibj.SampleRobot;
 import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.interfaces.Potentiometer;
+
 
 public class Robot extends SampleRobot {
 
@@ -25,9 +26,9 @@ public class Robot extends SampleRobot {
 	public Robot() {
 		runningModules = new LinkedList<>();
 		drivetrain = new DriveTrain();
-		//angleSensor = new Potentiometer();
+		angleSensor = new Potentiometer();
 		pressureSensor = new PressureSensor();
-		shooter = new Shooter(pressureSensor, null);
+		shooter = new Shooter(pressureSensor, angleSensor);
 		driverControl = new DriverControl(drivetrain, shooter, pressureSensor);
 	}
 	

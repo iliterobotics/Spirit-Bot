@@ -76,9 +76,9 @@ public class Shooter implements Module {
 		}
 		*/
 		if(!limitSwitch.get()) {
-			angleMotor.set(0);
+			elevateMotor.set(0);
 		}
-		angleMotor.set(output);
+		elevateMotor.set(output);
 	}
     
 }
