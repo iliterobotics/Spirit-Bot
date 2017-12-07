@@ -35,36 +35,7 @@ public class PressureSensor implements Module{
 		
 		voltageReadout = aio.getVoltage();
 		System.out.println("Voltage: " + aio.getVoltage() + "v");
-		
-		if(getPSI() < 60)// Low Pressure > blink
-		{
-			
-			if(System.currentTimeMillis() - startTime > 1000)
-			{
-				startTime = System.currentTimeMillis();
-				flipLedState();
-			}
-			
-		}
-		else
-		{
-			ledOff();
-		}
 		return true;
-	}
-	public void flipLedState() {
-		 Relay.Value current = ledRelay.get();
-		 if(current == Relay.Value.kOff)
-		 {
-			 ledRelay.set(Relay.Value.kOn);
-		 }
-		 else
-		 {
-			 ledRelay.set(Relay.Value.kOff);
-		 }
-	}
-	public void blinkLED() {
-		
 	}
 	
 	public void ledOff() {
