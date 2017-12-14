@@ -7,10 +7,12 @@ import org.usfirst.frc.team1885.robot.modules.DriveTrain;
 import org.usfirst.frc.team1885.robot.modules.DriverControl;
 import org.usfirst.frc.team1885.robot.modules.Module;
 import org.usfirst.frc.team1885.robot.modules.Shooter;
+import org.usfirst.frc.team1885.robot.sensors.Potentiometer;
 import org.usfirst.frc.team1885.robot.sensors.PressureSensor;
 
 import edu.wpi.first.wpilibj.SampleRobot;
-import edu.wpi.first.wpilibj.interfaces.Potentiometer;
+import edu.wpi.first.wpilibj.Talon;
+
 
 public class Robot extends SampleRobot {
 
@@ -20,14 +22,19 @@ public class Robot extends SampleRobot {
 	private Shooter shooter;
 	private Potentiometer angleSensor;
 	private PressureSensor pressureSensor;
-
-	public void robotInit() {
+	
+	public Robot() {
 		runningModules = new LinkedList<>();
 		drivetrain = new DriveTrain();
-		//angleSensor = new Potentiometer();
-		//pressureSensor = new PressureSensor();
-		//shooter = new Shooter(pressureSensor, angleSensor);
-		driverControl = new DriverControl(drivetrain);
+		angleSensor = new Potentiometer();
+		pressureSensor = new PressureSensor();
+		shooter = new Shooter(pressureSensor, angleSensor);
+		driverControl = new DriverControl(drivetrain, shooter, pressureSensor);
+	}
+	
+
+	public void robotInit() {
+		
 	}
 
 	// This function is called once each time the robot enters teleop mode.

@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1885.robot.sensors;
 
+import org.usfirst.frc.team1885.robot.Constants;
 import org.usfirst.frc.team1885.robot.modules.Module;
 
 import edu.wpi.first.wpilibj.*;
@@ -21,7 +22,7 @@ public class PressureSensor implements Module{
     
 	public PressureSensor() {
         aio = new AnalogInput(AIO_PORT);
-        ledRelay = new Relay(3);
+        ledRelay = new Relay(Constants.LED_RELAY);
     }
 	
 	public void init() {
@@ -34,36 +35,7 @@ public class PressureSensor implements Module{
 		
 		voltageReadout = aio.getVoltage();
 		System.out.println("Voltage: " + aio.getVoltage() + "v");
-		
-		if(getPSI() < 60)// Low Pressure > blink
-		{
-			
-			if(System.currentTimeMillis() - startTime > 1000)
-			{
-				startTime = System.currentTimeMillis();
-				flipLedState();
-			}
-			
-		}
-		else
-		{
-			ledOff();
-		}
 		return true;
-	}
-	public void flipLedState() {
-		 Relay.Value current = ledRelay.get();
-		 if(current == Relay.Value.kOff)
-		 {
-			 ledRelay.set(Relay.Value.kOn);
-		 }
-		 else
-		 {
-			 ledRelay.set(Relay.Value.kOff);
-		 }
-	}
-	public void blinkLED() {
-		
 	}
 	
 	public void ledOff() {

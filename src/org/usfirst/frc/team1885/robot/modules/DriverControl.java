@@ -1,5 +1,6 @@
 package org.usfirst.frc.team1885.robot.modules;
 
+import org.usfirst.frc.team1885.robot.Constants;
 import org.usfirst.frc.team1885.robot.sensors.PressureSensor;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -29,12 +30,16 @@ public class DriverControl implements Module{
 	private Joystick gamepad;
 	private Relay hornRelay; 
 	private PressureSensor pressureSensor;
+	private double startTime = System.currentTimeMillis();
+	private double duration = 1000;//duration for relay to be on.
 
 	
 	public DriverControl(DriveTrain drivetrain, Shooter shooter, PressureSensor pressureSensor) {
 		this.drivetrain = drivetrain;
 		this.shooter = shooter;
 		this.pressureSensor = pressureSensor;
+		gamepad = new Joystick(CONTROLLER_ID);
+		hornRelay = new Relay(Constants.HORN_RELAY);
 	
 	}
 	
@@ -43,8 +48,7 @@ public class DriverControl implements Module{
 	}
 	
 	public void init() {
-		gamepad = new Joystick(CONTROLLER_ID);
-		hornRelay = new Relay(2);
+		
 		
 	}
 	public void blowHorn() {
@@ -71,8 +75,18 @@ public class DriverControl implements Module{
 		
 		if(gamepad.getRawAxis(GAMEPAD_RIGHT_TRIGGER)>0.5)
 		{
-			blowHorn();
+			
+			if(!(System.currentTimeMillis() - startTime > duration))
+			{
+				hornRelay.set(Relay.Value.kOn);
+			}
+			else
+			{
+				hornRelay.set(Relay.Value.kOff);
+				startTime = System.currentTimeMillis();
+			}
 			shooter.shoot();
+			
 		}
 		else {
 			hornRelayOff();
@@ -98,6 +112,8 @@ public class DriverControl implements Module{
 		{
 			shooter.setOutput(0);
 		}
+		
+		
 		
 		return false;
 	}

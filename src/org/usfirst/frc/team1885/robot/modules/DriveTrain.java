@@ -9,12 +9,15 @@ public class DriveTrain implements Module {
 	
 	Talon leftMotor, rightMotor;
 	double desiredLeft, desiredRight;
-	
-	public void init() {
+	public DriveTrain() {
 		leftMotor = new Talon(LEFT_PWM_ID);
 		rightMotor = new Talon(RIGHT_PWM_ID);
 		leftMotor.setBounds(2.0387, 1.539, 1.513, 1.487, .989);
 		rightMotor.setBounds(2.0387, 1.539, 1.513, 1.487, .989);
+	}
+	
+	public void init() {
+		
 	}
 	
 	public boolean update() {
