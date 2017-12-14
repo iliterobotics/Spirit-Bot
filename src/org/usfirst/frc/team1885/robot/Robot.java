@@ -26,9 +26,9 @@ public class Robot extends SampleRobot {
 	public Robot() {
 		runningModules = new LinkedList<>();
 		drivetrain = new DriveTrain();
-		angleSensor = new Potentiometer();
-		pressureSensor = new PressureSensor();
-		shooter = new Shooter(pressureSensor, angleSensor);
+		//angleSensor = new Potentiometer();
+	    pressureSensor = new PressureSensor();
+		shooter = new Shooter(pressureSensor, null);
 		driverControl = new DriverControl(drivetrain, shooter, pressureSensor);
 	}
 	

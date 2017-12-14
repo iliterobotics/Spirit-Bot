@@ -68,13 +68,13 @@ public class Shooter implements Module {
 	}
 
 	public boolean shoot() {
-		if (pressureSensor.getPSI() >= Constants.PSI_THRESHOLD) {
+		//if (pressureSensor.getPSI() >= Constants.PSI_THRESHOLD) {
 			shootRelay.set(Relay.Value.kOn);// On state.
 			return true;
-		} 
-		else {
-			return false;
-		}
+		//} 
+		//else {
+			//return false;
+		//}
 	}
 	public void shootRelayOff()
 	{

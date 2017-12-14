@@ -30,9 +30,12 @@ public class DriverControl implements Module{
 	private Joystick gamepad;
 	private Relay hornRelay; 
 	private PressureSensor pressureSensor;
-	private double startTime = System.currentTimeMillis();
-	private double duration = 1000;//duration for relay to be on.
-
+	private long startTime = System.currentTimeMillis();
+	private long hornDuration = 400;//duration for relay to be on.
+	private long shotDuration = 450;
+	private boolean hornSequenceInit = false;
+	private long endOfWarningTime = -1;
+	private long endOfShotTime = -1;
 	
 	public DriverControl(DriveTrain drivetrain, Shooter shooter, PressureSensor pressureSensor) {
 		this.drivetrain = drivetrain;
@@ -51,16 +54,17 @@ public class DriverControl implements Module{
 		
 		
 	}
+	/*
 	public void blowHorn() {
 
 			hornRelay.set(Relay.Value.kOn);// On state.
 			double startTime = System.currentTimeMillis();
 			double duration = 1000;//duration for relay to be on.
-			while (System.currentTimeMillis() - startTime < duration);
+			System.currentTimeMillis() - startTime < duration);
 			hornRelay.set(Relay.Value.kOff);// Off state.
 			
 	}
-	
+	*/
 	public void hornRelayOff()
 	{
 		hornRelay.set(Relay.Value.kOff);
@@ -73,26 +77,44 @@ public class DriverControl implements Module{
 		double right = throttle + turn;
 		drivetrain.setSpeeds(left, right);
 		
-		if(gamepad.getRawAxis(GAMEPAD_RIGHT_TRIGGER)>0.5)
+	
+		
+		if(gamepad.getRawAxis(GAMEPAD_RIGHT_TRIGGER) > 0.5)
 		{
-			
-			if(!(System.currentTimeMillis() - startTime > duration))
+			if(!hornSequenceInit) {
+				hornSequenceInit = true;
+				startTime = System.currentTimeMillis();
+				endOfWarningTime = startTime + hornDuration;
+				endOfShotTime = endOfWarningTime + shotDuration;
+				
+			}
+			long now = System.currentTimeMillis();
+			if (now > startTime && now <= endOfWarningTime)
 			{
 				hornRelay.set(Relay.Value.kOn);
 			}
-			else
+			else if(now > endOfWarningTime && now < endOfShotTime)
 			{
 				hornRelay.set(Relay.Value.kOff);
-				startTime = System.currentTimeMillis();
+				shooter.shoot();
 			}
-			shooter.shoot();
+			else if (now > endOfShotTime)
+			{
+				shooter.shootRelayOff();
+			}
 			
+
 		}
 		else {
 			hornRelayOff();
 			shooter.shootRelayOff();
+			hornSequenceInit = false;
+
 		}
-		
+		if(gamepad.getRawButton(GAMEPAD_B_BUTTON))
+		{
+			shooter.shoot();
+		}
 		if(gamepad.getRawAxis(GAMEPAD_LEFT_TRIGGER) > 0.5)
 		{
 			shooter.dump();
