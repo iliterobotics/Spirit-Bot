@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Talon;
 
 public class Shooter implements Module {
-    
+
 	private Talon elevateMotor;
 	private PressureSensor pressureSensor;
 	private Potentiometer pot;
@@ -19,7 +19,6 @@ public class Shooter implements Module {
 	private Relay ledRelay;
 	private long startTime;
 	private long currentTime;
-	
 
 	public Shooter(PressureSensor pressureSensor, Potentiometer pot) {
 		this.pressureSensor = pressureSensor;
@@ -27,9 +26,8 @@ public class Shooter implements Module {
 		elevateMotor = new Talon(Constants.TALON_PWM_PORT_ELEVATE);
 		this.shootRelay = new Relay(Constants.RELAY_PORT_SHOOTER);
 		this.dumpRelay = new Relay(Constants.RELAY_PORT_DUMP);
-		this.ledRelay =  new Relay(Constants.LED_RELAY);
+		this.ledRelay = new Relay(Constants.LED_RELAY);
 		this.limitSwitch = new DigitalInput(Constants.DIO_PORT_ELEVATION_LIMIT_SWITCH);
-
 
 	}
 
@@ -45,59 +43,55 @@ public class Shooter implements Module {
 		this.angle = pot.getAngle();
 		blinkLED();
 		return false;
-		
+
 	}
 
 	public boolean dump() {
-			dumpRelay.set(Relay.Value.kOn);// On state.
-			return true;
-		
+		dumpRelay.set(Relay.Value.kOn);// On state.
+		return true;
+
 	}
-	
-	public void blinkLED(){
-		if(pressureSensor.getPSI() < Constants.PSI_THRESHOLD && currentTime - startTime > 1000)
-		{
+
+	public void blinkLED() {
+		if (pressureSensor.getPSI() < Constants.PSI_THRESHOLD && currentTime - startTime > 1000) {
 			if (ledRelay.get().equals(Relay.Value.kOn))
 				ledRelay.set(Relay.Value.kOff);
 			else
 				ledRelay.set(Relay.Value.kOn);
 			startTime = currentTime;
-			
-			
+
 		}
 	}
 
 	public boolean shoot() {
-		//if (pressureSensor.getPSI() >= Constants.PSI_THRESHOLD) {
-			shootRelay.set(Relay.Value.kOn);// On state.
-			return true;
-		//} 
-		//else {
-			//return false;
-		//}
+		// if (pressureSensor.getPSI() >= Constants.PSI_THRESHOLD) {
+		shootRelay.set(Relay.Value.kOn);// On state.
+		return true;
+		// }
+		// else {
+		// return false;
+		// }
 	}
-	public void shootRelayOff()
-	{
+
+	public void shootRelayOff() {
 		shootRelay.set(Relay.Value.kOff);
 	}
-	public void dumpRelayOff()
-	{
+
+	public void dumpRelayOff() {
 		dumpRelay.set(Relay.Value.kOff);
 	}
 
 	public void setOutput(double output) {
 		double threshold = 5;
 		/*
-		if( Math.abs(angle - Constants.POT_LIMIT_1) < threshold ||
-		 	Math.abs(angle - Constants.POT_LIMIT_2) < threshold)
-		{
+		 * if( Math.abs(angle - Constants.POT_LIMIT_1) < threshold || Math.abs(angle -
+		 * Constants.POT_LIMIT_2) < threshold) { elevateMotor.set(0); }
+		 */
+		if ((!limitSwitch.get()) && output > 0) {
 			elevateMotor.set(0);
+		} else {
+			elevateMotor.set(output);
 		}
-		*/
-		if(!limitSwitch.get()) {
-			elevateMotor.set(0);
-		}
-		elevateMotor.set(output);
 	}
-    
+
 }

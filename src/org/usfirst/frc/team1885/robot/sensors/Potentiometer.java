@@ -1,6 +1,7 @@
 package org.usfirst.frc.team1885.robot.sensors;
 
 import org.usfirst.frc.team1885.robot.Constants;
+import org.usfirst.frc.team1885.robot.modules.Module;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 
@@ -33,6 +34,11 @@ public class Potentiometer implements Module
 		voltage = input.getVoltage();
 		cvtToAngle(voltage);
 		return true;
+	}
+	@Override
+	public void init() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

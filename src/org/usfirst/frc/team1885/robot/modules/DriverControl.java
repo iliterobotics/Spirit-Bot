@@ -25,6 +25,9 @@ public class DriverControl implements Module{
 	
 	public final int CONTROLLER_ID = 0;
 	
+	private static final double sELEVATION_SPEED_UP = -0.2;
+	private static final double sELEVATION_SPEED_DOWN = 0.15;
+	
 	private DriveTrain drivetrain;
 	private Shooter shooter;
 	private Joystick gamepad;
@@ -72,48 +75,49 @@ public class DriverControl implements Module{
 	public boolean update() {
 
 		double throttle = gamepad.getRawAxis(GAMEPAD_LEFT_Y);
-		double turn = gamepad.getRawAxis(GAMEPAD_RIGHT_X);
+		double turn = gamepad.getRawAxis(GAMEPAD_RIGHT_X) / 2;
 		double left = throttle - turn;
 		double right = throttle + turn;
-		drivetrain.setSpeeds(left, right);
+		drivetrain.setSpeeds(left, -right);
 		
-	
 		
-		if(gamepad.getRawAxis(GAMEPAD_RIGHT_TRIGGER) > 0.5)
-		{
-			if(!hornSequenceInit) {
-				hornSequenceInit = true;
-				startTime = System.currentTimeMillis();
-				endOfWarningTime = startTime + hornDuration;
-				endOfShotTime = endOfWarningTime + shotDuration;
-				
-			}
-			long now = System.currentTimeMillis();
-			if (now > startTime && now <= endOfWarningTime)
-			{
-				hornRelay.set(Relay.Value.kOn);
-			}
-			else if(now > endOfWarningTime && now < endOfShotTime)
-			{
-				hornRelay.set(Relay.Value.kOff);
-				shooter.shoot();
-			}
-			else if (now > endOfShotTime)
-			{
-				shooter.shootRelayOff();
-			}
-			
-
-		}
-		else {
-			hornRelayOff();
-			shooter.shootRelayOff();
-			hornSequenceInit = false;
-
-		}
+//		if(gamepad.getRawAxis(GAMEPAD_RIGHT_TRIGGER) > 0.5)
+//		{
+//			if(!hornSequenceInit) {
+//				hornSequenceInit = true;
+//				startTime = System.currentTimeMillis();
+//				endOfWarningTime = startTime + hornDuration;
+//				endOfShotTime = endOfWarningTime + shotDuration;
+//				
+//			}
+//			long now = System.currentTimeMillis();
+//			if (now > startTime && now <= endOfWarningTime)
+//			{
+//				hornRelay.set(Relay.Value.kOn);
+//			}
+//			else if(now > endOfWarningTime && now < endOfShotTime)
+//			{
+//				hornRelay.set(Relay.Value.kOff);
+//				shooter.shoot();
+//			}
+//			else if (now > endOfShotTime)
+//			{
+//				shooter.shootRelayOff();
+//			}
+//			
+//
+//		}
+//		else {
+//			hornRelayOff();
+//			shooter.shootRelayOff();
+//			hornSequenceInit = false;
+//
+//		}
 		if(gamepad.getRawButton(GAMEPAD_B_BUTTON))
 		{
-			shooter.shoot();
+			hornRelay.set(Relay.Value.kOn);
+		} else {
+			hornRelayOff();
 		}
 		if(gamepad.getRawAxis(GAMEPAD_LEFT_TRIGGER) > 0.5)
 		{
@@ -124,11 +128,11 @@ public class DriverControl implements Module{
 		}
 		if(gamepad.getRawButton(GAMEPAD_Y_BUTTON))
 		{
-			shooter.setOutput(1); //Move shooter up.
+			shooter.setOutput(sELEVATION_SPEED_UP); //Move shooter up.
 		}
 		else if(gamepad.getRawButton(GAMEPAD_A_BUTTON))
 		{
-			shooter.setOutput(-1);//Move shooter down.
+			shooter.setOutput(sELEVATION_SPEED_DOWN);//Move shooter down.
 		}
 		else
 		{
