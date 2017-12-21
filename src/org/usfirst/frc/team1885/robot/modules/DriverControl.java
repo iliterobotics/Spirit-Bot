@@ -81,38 +81,38 @@ public class DriverControl implements Module{
 		drivetrain.setSpeeds(left, -right);
 		
 		
-//		if(gamepad.getRawAxis(GAMEPAD_RIGHT_TRIGGER) > 0.5)
-//		{
-//			if(!hornSequenceInit) {
-//				hornSequenceInit = true;
-//				startTime = System.currentTimeMillis();
-//				endOfWarningTime = startTime + hornDuration;
-//				endOfShotTime = endOfWarningTime + shotDuration;
-//				
-//			}
-//			long now = System.currentTimeMillis();
-//			if (now > startTime && now <= endOfWarningTime)
-//			{
-//				hornRelay.set(Relay.Value.kOn);
-//			}
-//			else if(now > endOfWarningTime && now < endOfShotTime)
-//			{
-//				hornRelay.set(Relay.Value.kOff);
-//				shooter.shoot();
-//			}
-//			else if (now > endOfShotTime)
-//			{
-//				shooter.shootRelayOff();
-//			}
-//			
-//
-//		}
-//		else {
-//			hornRelayOff();
-//			shooter.shootRelayOff();
-//			hornSequenceInit = false;
-//
-//		}
+		if(gamepad.getRawAxis(GAMEPAD_RIGHT_TRIGGER) > 0.5)
+		{
+			if(!hornSequenceInit) {
+				hornSequenceInit = true;
+				startTime = System.currentTimeMillis();
+				endOfWarningTime = startTime + hornDuration;
+				endOfShotTime = endOfWarningTime + shotDuration;
+				
+			}
+			long now = System.currentTimeMillis();
+			if (now > startTime && now <= endOfWarningTime)
+			{
+				hornRelay.set(Relay.Value.kOn);
+			}
+			else if(now > endOfWarningTime && now < endOfShotTime)
+			{
+				hornRelay.set(Relay.Value.kOff);
+				shooter.shoot();
+			}
+			else if (now > endOfShotTime)
+			{
+				shooter.shootRelayOff();
+			}
+			
+
+		}
+		else {
+			hornRelayOff();
+			shooter.shootRelayOff();
+			hornSequenceInit = false;
+
+		}
 		if(gamepad.getRawButton(GAMEPAD_B_BUTTON))
 		{
 			hornRelay.set(Relay.Value.kOn);

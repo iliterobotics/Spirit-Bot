@@ -10,8 +10,6 @@ import java.util.logging.Handler;
 public class PressureSensor implements Module{
     
 	//public static final double PSI_PER_VOLTAGE = 1;
-
-    public static final int AIO_PORT = 1;
     
 	private AnalogInput aio;
     private double voltageReadout;
@@ -20,7 +18,7 @@ public class PressureSensor implements Module{
     private boolean ledState;
     
 	public PressureSensor() {
-        aio = new AnalogInput(AIO_PORT);
+        aio = new AnalogInput(Constants.ANALOG_PORT_PRESSURE_SENSOR);
         
     }
 	
@@ -32,7 +30,6 @@ public class PressureSensor implements Module{
 		
 		
 		voltageReadout = aio.getVoltage();
-//		System.out.println("Voltage: " + aio.getVoltage() + "v");
 		return true;
 	}
 	

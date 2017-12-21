@@ -23,7 +23,7 @@ public class Shooter implements Module {
 	public Shooter(PressureSensor pressureSensor, Potentiometer pot) {
 		this.pressureSensor = pressureSensor;
 		this.pot = pot;
-		elevateMotor = new Talon(Constants.TALON_PWM_PORT_ELEVATE);
+		this.elevateMotor = new Talon(Constants.TALON_PWM_PORT_ELEVATE);
 		this.shootRelay = new Relay(Constants.RELAY_PORT_SHOOTER);
 		this.dumpRelay = new Relay(Constants.RELAY_PORT_DUMP);
 		this.ledRelay = new Relay(Constants.LED_RELAY);
@@ -40,10 +40,14 @@ public class Shooter implements Module {
 
 	@Override
 	public boolean update() {
+		currentTime = System.currentTimeMillis();
 		this.angle = pot.getAngle();
+		if ((currentTime - startTime) % 200 < 50)
+		{
+			System.out.printf("Angle: %s\n", angle);
+		}
 		blinkLED();
 		return false;
-
 	}
 
 	public boolean dump() {
@@ -54,10 +58,12 @@ public class Shooter implements Module {
 
 	public void blinkLED() {
 		if (pressureSensor.getPSI() < Constants.PSI_THRESHOLD && currentTime - startTime > 1000) {
-			if (ledRelay.get().equals(Relay.Value.kOn))
+			if (ledRelay.get().equals(Relay.Value.kOn)) {
 				ledRelay.set(Relay.Value.kOff);
-			else
+			}
+			else {
 				ledRelay.set(Relay.Value.kOn);
+			}
 			startTime = currentTime;
 
 		}

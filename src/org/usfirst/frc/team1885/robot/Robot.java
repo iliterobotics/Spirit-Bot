@@ -26,9 +26,9 @@ public class Robot extends SampleRobot {
 	public Robot() {
 		runningModules = new LinkedList<>();
 		drivetrain = new DriveTrain();
-		//angleSensor = new Potentiometer();
+		angleSensor = new Potentiometer();
 	    pressureSensor = new PressureSensor();
-		shooter = new Shooter(pressureSensor, null);
+		shooter = new Shooter(pressureSensor, angleSensor);
 		driverControl = new DriverControl(drivetrain, shooter, pressureSensor);
 	}
 	
@@ -39,7 +39,7 @@ public class Robot extends SampleRobot {
 
 	// This function is called once each time the robot enters teleop mode.
 	public void operatorControl() {
-		setRunningModules(drivetrain, driverControl);
+		setRunningModules(drivetrain, driverControl, shooter);
 		initModules();
 		while (isOperatorControl() && isEnabled()) {
 			for(Module m : runningModules) {

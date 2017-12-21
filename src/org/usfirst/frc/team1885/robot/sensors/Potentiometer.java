@@ -5,39 +5,32 @@ import org.usfirst.frc.team1885.robot.modules.Module;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 
-public class Potentiometer implements Module
+public class Potentiometer
 {
 	private AnalogInput input;
-	private int angle;
-	private double voltage;
-	public static final int OFFSET = 20, MAX_VOLTAGE = 5; //needs to be checked
+	public double offset = 14.7;
+	public static final int MAX_VOLTAGE = 5; //needs to be checked
+	
 	
 
 	public Potentiometer()
 	{
 		input = new AnalogInput(Constants.ANALOG_PORT_ELEVATION);
 	}
-	public void cvtToAngle(double voltage)
+	public double cvtToAngle(double voltage)
 	{
-		angle = 0;
+		return (voltage / MAX_VOLTAGE) * 340 - offset;
+	}
+	
+	public void zeroAngle(double currentAngle)
+	{
+		offset = currentAngle;
 	}
 
 	public double getAngle() 
 	{
-		update();
-		return angle;
-	}
-
-	
-	public boolean update()
-	{
-		voltage = input.getVoltage();
-		cvtToAngle(voltage);
-		return true;
-	}
-	@Override
-	public void init() {
-		// TODO Auto-generated method stub
+		System.out.println(cvtToAngle(input.getVoltage()) + "Pot reading");
+		return cvtToAngle(input.getVoltage());
 		
 	}
 	
