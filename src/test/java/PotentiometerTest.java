@@ -4,7 +4,7 @@ public class PotentiometerTest {
 
     @Test
     public void voltageToAngle() {
-        
+
     }
 
 }

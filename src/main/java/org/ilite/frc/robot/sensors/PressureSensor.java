@@ -2,40 +2,23 @@ package org.ilite.frc.robot.sensors;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import org.ilite.frc.robot.Constants;
-import org.ilite.frc.robot.modules.IModule;
 
-public class PressureSensor implements IModule {
-    
-	//public static final double PSI_PER_VOLTAGE = 1;
-    
+public class PressureSensor {
+
 	private AnalogInput aio;
-    private double voltageReadout;
-    private final double supplyVoltage = 5;
-    private long startTime;
-    private boolean ledState;
     
 	public PressureSensor() {
         aio = new AnalogInput(Constants.ANALOG_PORT_PRESSURE_SENSOR);
-        
     }
-	
-	public void init() {
-		startTime = System.currentTimeMillis();
-	}
-	
-	public boolean update() {
-		
-		
-		voltageReadout = aio.getVoltage();
-		return true;
-	}
-	
 	
 	public double getPSI()
 	{
-		double pressure = 250 * ( voltageReadout/supplyVoltage ) - 25;
-		return pressure;
+		return 250 * ( aio.getVoltage() / Constants.ANALOG_SUPPLY_VOLTAGE_PRESSURE_SENSOR ) - 25;
 	}
+
+	public double getNormalizedSupplyVoltage(double knownPressure) {
+	    return aio.getVoltage() / ((0.004 * knownPressure) + 0.1);
+    }
 	
 
 } 
