@@ -1,17 +1,15 @@
 
-package org.usfirst.frc.team1885.robot;
-
-import java.util.LinkedList;
-
-import org.usfirst.frc.team1885.robot.modules.DriveTrain;
-import org.usfirst.frc.team1885.robot.modules.DriverControl;
-import org.usfirst.frc.team1885.robot.modules.Module;
-import org.usfirst.frc.team1885.robot.modules.Shooter;
-import org.usfirst.frc.team1885.robot.sensors.Potentiometer;
-import org.usfirst.frc.team1885.robot.sensors.PressureSensor;
+package org.ilite.frc.robot;
 
 import edu.wpi.first.wpilibj.SampleRobot;
-import edu.wpi.first.wpilibj.Talon;
+import org.ilite.frc.robot.modules.DriveTrain;
+import org.ilite.frc.robot.modules.DriverControl;
+import org.ilite.frc.robot.modules.Module;
+import org.ilite.frc.robot.modules.Shooter;
+import org.ilite.frc.robot.sensors.Potentiometer;
+import org.ilite.frc.robot.sensors.PressureSensor;
+
+import java.util.LinkedList;
 
 
 public class Robot extends SampleRobot {

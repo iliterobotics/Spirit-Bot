@@ -1,4 +1,4 @@
-package org.usfirst.frc.team1885.robot.sensors;
+package org.ilite.frc.robot.sensors;
 import edu.wpi.first.wpilibj.AnalogInput;
 
 public class Ultrasonic

@@ -1,11 +1,11 @@
-package org.usfirst.frc.team1885.robot.modules;
-
-import org.usfirst.frc.team1885.robot.Constants;
-import org.usfirst.frc.team1885.robot.sensors.*;
+package org.ilite.frc.robot.modules;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Talon;
+import org.ilite.frc.robot.Constants;
+import org.ilite.frc.robot.sensors.Potentiometer;
+import org.ilite.frc.robot.sensors.PressureSensor;
 
 public class Shooter implements Module {
 

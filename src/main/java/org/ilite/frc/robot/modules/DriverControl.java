@@ -1,11 +1,9 @@
-package org.usfirst.frc.team1885.robot.modules;
+package org.ilite.frc.robot.modules;
 
-import org.usfirst.frc.team1885.robot.Constants;
-import org.usfirst.frc.team1885.robot.sensors.PressureSensor;
-
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Relay;
+import org.ilite.frc.robot.Constants;
+import org.ilite.frc.robot.sensors.PressureSensor;
 
 public class DriverControl implements Module{
 
@@ -22,7 +20,7 @@ public class DriverControl implements Module{
 	public static final int GAMEPAD_Y_BUTTON = 4;
 	public static final int GAMEPAD_DPAD_UP = 0;
 	public static final int GAMEPAD_DPAD_DOWN = 0;
-	
+
 	public final int CONTROLLER_ID = 0;
 	
 	private static final double sELEVATION_SPEED_UP = -0.2;

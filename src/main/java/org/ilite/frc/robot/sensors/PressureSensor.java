@@ -1,13 +1,10 @@
-package org.usfirst.frc.team1885.robot.sensors;
+package org.ilite.frc.robot.sensors;
 
-import org.usfirst.frc.team1885.robot.Constants;
-import org.usfirst.frc.team1885.robot.modules.Module;
+import edu.wpi.first.wpilibj.AnalogInput;
+import org.ilite.frc.robot.Constants;
+import org.ilite.frc.robot.modules.Module;
 
-import edu.wpi.first.wpilibj.*;
-import edu.wpi.first.wpilibj.Relay;
-import java.util.logging.Handler;
-
-public class PressureSensor implements Module{
+public class PressureSensor implements Module {
     
 	//public static final double PSI_PER_VOLTAGE = 1;
     

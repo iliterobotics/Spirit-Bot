@@ -1,9 +1,7 @@
-package org.usfirst.frc.team1885.robot.sensors;
-
-import org.usfirst.frc.team1885.robot.Constants;
-import org.usfirst.frc.team1885.robot.modules.Module;
+package org.ilite.frc.robot.sensors;
 
 import edu.wpi.first.wpilibj.AnalogInput;
+import org.ilite.frc.robot.Constants;
 
 public class Potentiometer
 {
