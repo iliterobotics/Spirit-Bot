@@ -4,7 +4,7 @@ package org.ilite.frc.robot;
 import edu.wpi.first.wpilibj.SampleRobot;
 import org.ilite.frc.robot.modules.DriveTrain;
 import org.ilite.frc.robot.modules.DriverControl;
-import org.ilite.frc.robot.modules.Module;
+import org.ilite.frc.robot.modules.IModule;
 import org.ilite.frc.robot.modules.Shooter;
 import org.ilite.frc.robot.sensors.Potentiometer;
 import org.ilite.frc.robot.sensors.PressureSensor;
@@ -14,7 +14,7 @@ import java.util.LinkedList;
 
 public class Robot extends SampleRobot {
 
-	private LinkedList<Module> runningModules;
+	private LinkedList<IModule> runningModules;
 	private DriverControl driverControl;
 	private DriveTrain drivetrain;
 	private Shooter shooter;
@@ -40,22 +40,22 @@ public class Robot extends SampleRobot {
 		setRunningModules(drivetrain, driverControl, shooter);
 		initModules();
 		while (isOperatorControl() && isEnabled()) {
-			for(Module m : runningModules) {
+			for(IModule m : runningModules) {
 				m.update();
 			}
 		}
 	}
 	
-	private void setRunningModules(Module...modules) {
+	private void setRunningModules(IModule...modules) {
 		runningModules.clear();
-		for(Module m : modules) {
+		for(IModule m : modules) {
 			runningModules.add(m);
 		}
 		initModules();
 	}
 	
 	private void initModules() {
-		for(Module m : runningModules) {
+		for(IModule m : runningModules) {
 			m.init();
 		}
 	}

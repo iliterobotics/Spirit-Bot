@@ -1,6 +1,6 @@
 package org.ilite.frc.robot.modules;
 
-public interface Module {
+public interface IModule {
 
 	void init();
 	boolean update();

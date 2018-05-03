@@ -7,7 +7,7 @@ import org.ilite.frc.robot.Constants;
 import org.ilite.frc.robot.sensors.Potentiometer;
 import org.ilite.frc.robot.sensors.PressureSensor;
 
-public class Shooter implements Module {
+public class Shooter implements IModule {
 
 	private Talon elevateMotor;
 	private PressureSensor pressureSensor;

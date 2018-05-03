@@ -2,9 +2,9 @@ package org.ilite.frc.robot.sensors;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import org.ilite.frc.robot.Constants;
-import org.ilite.frc.robot.modules.Module;
+import org.ilite.frc.robot.modules.IModule;
 
-public class PressureSensor implements Module {
+public class PressureSensor implements IModule {
     
 	//public static final double PSI_PER_VOLTAGE = 1;
     

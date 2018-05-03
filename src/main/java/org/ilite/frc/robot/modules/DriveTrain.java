@@ -2,7 +2,7 @@ package org.ilite.frc.robot.modules;
 
 import edu.wpi.first.wpilibj.Talon;
 
-public class DriveTrain implements Module {
+public class DriveTrain implements IModule {
 
 	public final int LEFT_PWM_ID = 0;
 	public final int RIGHT_PWM_ID = 1;

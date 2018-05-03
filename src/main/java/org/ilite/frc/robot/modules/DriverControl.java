@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj.Relay;
 import org.ilite.frc.robot.Constants;
 import org.ilite.frc.robot.sensors.PressureSensor;
 
-public class DriverControl implements Module{
+public class DriverControl implements IModule {
 
 	public static final double JOYSTICK_DEADZONE = 0.05;
 	public static final double TRIGGER_DEADZONE = 0.5;
