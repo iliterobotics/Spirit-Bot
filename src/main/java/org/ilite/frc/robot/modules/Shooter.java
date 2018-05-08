@@ -51,9 +51,12 @@ public class Shooter implements IModule {
 	}
 
 	public boolean dump() {
-		mDumpRelay.set(Relay.Value.kOn);// On state.
+		
+//		if(mPressureSensor.getPSI() < {//pressure needed to dump
+			mDumpRelay.set(Relay.Value.kOn);// On state.
+//	    }
+		
 		return true;
-
 	}
 
 	public void blinkLED() {
@@ -70,7 +73,9 @@ public class Shooter implements IModule {
 	}
 
 	public boolean shoot() {
-		mShootRelay.set(Relay.Value.kOn);// On state.
+		if(!mLimitSwitch.get() /* mPressure.getPSI() > value */) { //Don't shoot unless limit switch is inactive
+			mShootRelay.set(Relay.Value.kOn);// On state.
+		}
 		return true;
 	}
 
