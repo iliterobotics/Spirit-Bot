@@ -9,82 +9,77 @@ import org.ilite.frc.robot.sensors.PressureSensor;
 
 public class Shooter implements IModule {
 
-	private Talon elevateMotor;
-	private PressureSensor pressureSensor;
-	private Potentiometer pot;
-	private Relay shootRelay;
-	private Relay dumpRelay;
-	private double angle;
-	private DigitalInput limitSwitch;
-	private Relay ledRelay;
-	private long startTime;
-	private long currentTime;
+	private Talon mElevateMotor;
+	private PressureSensor mPressureSensor;
+	private Potentiometer mPot;
+	private Relay mShootRelay;
+	private Relay mDumpRelay;
+	private double mAngle;
+	private DigitalInput mLimitSwitch;
+	private Relay mLedRelay;
+	private long mStartTime;
+	private long mCurrentTime;
 
 	public Shooter(PressureSensor pressureSensor, Potentiometer pot) {
-		this.pressureSensor = pressureSensor;
-		this.pot = pot;
-		this.elevateMotor = new Talon(Constants.TALON_PWM_PORT_ELEVATE);
-		this.shootRelay = new Relay(Constants.RELAY_PORT_SHOOTER);
-		this.dumpRelay = new Relay(Constants.RELAY_PORT_DUMP);
-		this.ledRelay = new Relay(Constants.LED_RELAY);
-		this.limitSwitch = new DigitalInput(Constants.DIO_PORT_ELEVATION_LIMIT_SWITCH);
+		this.mPressureSensor = pressureSensor;
+		this.mPot = pot;
+		this.mElevateMotor = new Talon(Constants.TALON_PWM_PORT_ELEVATE);
+		this.mShootRelay = new Relay(Constants.RELAY_PORT_SHOOTER);
+		this.mDumpRelay = new Relay(Constants.RELAY_PORT_DUMP);
+		this.mLedRelay = new Relay(Constants.LED_RELAY);
+		this.mLimitSwitch = new DigitalInput(Constants.DIO_PORT_ELEVATION_LIMIT_SWITCH);
 
 	}
 
 	@Override
 	public void init() {
-		this.angle = pot.getAngle();
-		startTime = System.currentTimeMillis();
-		currentTime = System.currentTimeMillis();
+		this.mAngle = mPot.getAngle();
+		mStartTime = System.currentTimeMillis();
+		mCurrentTime = System.currentTimeMillis();
 	}
 
 	@Override
 	public boolean update() {
-		currentTime = System.currentTimeMillis();
-		this.angle = pot.getAngle();
-		if ((currentTime - startTime) % 200 < 50)
+		mCurrentTime = System.currentTimeMillis();
+		this.mAngle = mPot.getAngle();
+		if ((mCurrentTime - mStartTime) % 200 < 50)
 		{
-			System.out.printf("Angle: %s\n", angle);
+			System.out.printf("Angle: %s\n", mAngle);
 		}
 		blinkLED();
 		return false;
 	}
 
 	public boolean dump() {
-		dumpRelay.set(Relay.Value.kOn);// On state.
+		mDumpRelay.set(Relay.Value.kOn);// On state.
 		return true;
 
 	}
 
 	public void blinkLED() {
-		if (pressureSensor.getPSI() < Constants.PSI_THRESHOLD && currentTime - startTime > 1000) {
-			if (ledRelay.get().equals(Relay.Value.kOn)) {
-				ledRelay.set(Relay.Value.kOff);
+		if (mPressureSensor.getPSI() < Constants.PSI_THRESHOLD && mCurrentTime - mStartTime > 1000) {
+			if (mLedRelay.get().equals(Relay.Value.kOn)) {
+				mLedRelay.set(Relay.Value.kOff);
 			}
 			else {
-				ledRelay.set(Relay.Value.kOn);
+				mLedRelay.set(Relay.Value.kOn);
 			}
-			startTime = currentTime;
+			mStartTime = mCurrentTime;
 
 		}
 	}
 
 	public boolean shoot() {
-		// if (pressureSensor.getPSI() >= Constants.PSI_THRESHOLD) {
-		shootRelay.set(Relay.Value.kOn);// On state.
+		mShootRelay.set(Relay.Value.kOn);// On state.
 		return true;
-		// }
-		// else {
-		// return false;
-		// }
 	}
 
 	public void shootRelayOff() {
-		shootRelay.set(Relay.Value.kOff);
+		mShootRelay.set(Relay.Value.kOff);
 	}
 
 	public void dumpRelayOff() {
-		dumpRelay.set(Relay.Value.kOff);
+		mDumpRelay.set(Relay.Value.kOff);
 	}
 
 	public void setOutput(double output) {
@@ -93,11 +88,11 @@ public class Shooter implements IModule {
 		 * if( Math.abs(angle - Constants.POT_LIMIT_1) < threshold || Math.abs(angle -
 		 * Constants.POT_LIMIT_2) < threshold) { elevateMotor.set(0); }
 		 */
-		if ((!limitSwitch.get()) && output > 0) {
-			elevateMotor.set(0);
+		if ((!mLimitSwitch.get()) && output > 0) {
+			mElevateMotor.set(0);
 		} else {
-			elevateMotor.set(output);
+			mElevateMotor.set(output);
 		}
 	}
-
+	
 }

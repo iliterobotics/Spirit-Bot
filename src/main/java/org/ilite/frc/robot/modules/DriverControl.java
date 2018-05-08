@@ -82,6 +82,7 @@ public class DriverControl implements IModule {
 		if(gamepad.getRawAxis(GAMEPAD_RIGHT_TRIGGER) > 0.5)
 		{
 			if(!hornSequenceInit) {
+				
 				hornSequenceInit = true;
 				startTime = System.currentTimeMillis();
 				endOfWarningTime = startTime + hornDuration;
