@@ -1,11 +1,10 @@
-package org.ilite.frc.robot.modules;
+import org.ilite.frc.robot.Constants;
+import org.ilite.frc.robot.sensors.Potentiometer;
+import org.ilite.frc.robot.sensors.PressureSensor;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Talon;
-import org.ilite.frc.robot.Constants;
-import org.ilite.frc.robot.sensors.Potentiometer;
-import org.ilite.frc.robot.sensors.PressureSensor;
 
 public class Shooter implements IModule {
 
@@ -52,9 +51,9 @@ public class Shooter implements IModule {
 
 	public boolean dump() {
 		
-//		if(mPressureSensor.getPSI() < {//pressure needed to dump
-			mDumpRelay.set(Relay.Value.kOn);// On state.
-//	    }
+		if(mPressureSensor.getPSI() > 70) {	//pressure needed to dump
+			mDumpRelay.set(Relay.Value.kOn);  // On state.
+	    }
 		
 		return true;
 	}
@@ -73,7 +72,7 @@ public class Shooter implements IModule {
 	}
 
 	public boolean shoot() {
-		if(!mLimitSwitch.get() /* mPressure.getPSI() > value */) { //Don't shoot unless limit switch is inactive
+		if(!mLimitSwitch.get() && mPressureSensor.getPSI() > 60 ) { //Don't shoot unless limit switch is inactive
 			mShootRelay.set(Relay.Value.kOn);// On state.
 		}
 		return true;
@@ -89,10 +88,10 @@ public class Shooter implements IModule {
 
 	public void setOutput(double output) {
 		double threshold = 5;
-		/*
-		 * if( Math.abs(angle - Constants.POT_LIMIT_1) < threshold || Math.abs(angle -
-		 * Constants.POT_LIMIT_2) < threshold) { elevateMotor.set(0); }
-		 */
+//		
+//		  if( Math.abs(angle - Constants.POT_LIMIT_1) < threshold || Math.abs(angle -
+//		  Constants.POT_LIMIT_2) < threshold) { elevateMotor.set(0); }
+//		 
 		if ((!mLimitSwitch.get()) && output > 0) {
 			mElevateMotor.set(0);
 		} else {

@@ -1,9 +1,10 @@
 package org.ilite.frc.robot.modules;
 
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Relay;
 import org.ilite.frc.robot.Constants;
 import org.ilite.frc.robot.sensors.PressureSensor;
+
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Relay;
 
 public class DriverControl implements IModule {
 
