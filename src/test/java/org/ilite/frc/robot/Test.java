@@ -18,10 +18,18 @@ public class Test {
     @Mock
     Shooter shooter;
 
+    //shootTest
     @org.junit.Test
-    public void testIt() {
+    public void testShoot() {
         when(shooter.shoot()).thenReturn(true);
         assertTrue(shooter.shoot());
+    }
+    
+    //dumpTest
+    @org.junit.Test
+    public void testDump() {
+    	when(shoot.dump()).thenReturn(true)
+    	assertTrue(shooter.dump());
     }
 
 }
