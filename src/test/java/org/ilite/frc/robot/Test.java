@@ -28,8 +28,9 @@ public class Test {
     //dumpTest
     @org.junit.Test
     public void testDump() {
-    	when(shoot.dump()).thenReturn(true)
+    	when(shooter.dump()).thenReturn(true);
     	assertTrue(shooter.dump());
     }
+    
 
 }
