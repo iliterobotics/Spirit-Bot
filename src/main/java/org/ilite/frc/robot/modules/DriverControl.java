@@ -5,6 +5,7 @@ import org.ilite.frc.robot.sensors.PressureSensor;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Relay;
+import edu.wpi.first.wpilibj.Solenoid;
 
 public class DriverControl implements IModule {
 
@@ -18,6 +19,7 @@ public class DriverControl implements IModule {
 	public static final int GAMEPAD_RIGHT_Y = 5;
 	public static final int GAMEPAD_A_BUTTON = 1;
 	public static final int GAMEPAD_B_BUTTON = 2;
+	public static final int GAMEPAD_X_BUTTON = 3;
 	public static final int GAMEPAD_Y_BUTTON = 4;
 	public static final int GAMEPAD_DPAD_UP = 0;
 	public static final int GAMEPAD_DPAD_DOWN = 0;
@@ -31,6 +33,7 @@ public class DriverControl implements IModule {
 	private Shooter shooter;
 	private Joystick gamepad;
 	private Relay hornRelay; 
+	private Solenoid solenoid = new Solenoid(1);
 	private PressureSensor pressureSensor;
 	private long startTime = System.currentTimeMillis();
 	private long hornDuration = 400;//duration for relay to be on.
@@ -134,12 +137,19 @@ public class DriverControl implements IModule {
 		{
 			shooter.setOutput(sELEVATION_SPEED_DOWN);//Move shooter down.
 		}
+		else if(gamepad.getRawButton(GAMEPAD_X_BUTTON))	
+		{
+			if(!(gamepad.getRawButton(GAMEPAD_X_BUTTON))) {
+				
+				solenoid.set(!solenoid.get());
+			}
+				
+
+		}
 		else
 		{
 			shooter.setOutput(0);
-		}
-		
-		
+		}		
 		
 		return false;
 	}
@@ -149,3 +159,4 @@ public class DriverControl implements IModule {
 	}
 	
 }
+
