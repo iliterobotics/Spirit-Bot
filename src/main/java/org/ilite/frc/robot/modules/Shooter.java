@@ -22,13 +22,13 @@ public class Shooter implements IModule {
 	private long mCurrentTime;
 
 	public Shooter(PressureSensor pressureSensor, Potentiometer pot) {
-		this.pressureSensor = pressureSensor;
-		this.pot = pot;
-		this.elevateMotor = new Talon(Constants.TALON_PWM_PORT_ELEVATE);
-		this.shootRelay = new Relay(Constants.RELAY_PORT_SHOOTER);
-		this.dumpRelay = new Relay(Constants.RELAY_PORT_DUMP);
-		this.ledRelay = new Relay(Constants.RELAY_PORT_LED);
-		this.limitSwitch = new DigitalInput(Constants.DIO_PORT_ELEVATION_LIMIT_SWITCH);
+		this.mPressureSensor = pressureSensor;
+		this.mPot = pot;
+		this.mElevateMotor = new Talon(Constants.TALON_PWM_PORT_ELEVATE);
+		this.mShootRelay = new Relay(Constants.RELAY_PORT_SHOOTER);
+		this.mDumpRelay = new Relay(Constants.RELAY_PORT_DUMP);
+		this.mLedRelay = new Relay(Constants.RELAY_PORT_LED);
+		this.mLimitSwitch = new DigitalInput(Constants.DIO_PORT_ELEVATION_LIMIT_SWITCH);
 
 	}
 
@@ -53,30 +53,29 @@ public class Shooter implements IModule {
 
 	public boolean dump() {
 		
-		if(mPressureSensor.getPSI() > 70) {	//pressure needed to dump
+		//if(mPressureSensor.getPSI() < 70) {	//pressure needed to dump
 			mDumpRelay.set(Relay.Value.kOn);  // On state.
-	    }
-		
+    //}
 		return true;
-	}
+}
 
-	public void blinkLED() {
-		if (isAtPressure() && currentTime - startTime > 1000) {
-			if (ledRelay.get().equals(Relay.Value.kOn)) {
-				ledRelay.set(Relay.Value.kOff);
-			}
-			else {
-				mLedRelay.set(Relay.Value.kOn);
-			}
-			mStartTime = mCurrentTime;
+    public void blinkLED() {
+        if (isAtPressure() && mCurrentTime - mStartTime > 1000) {
+            if (mLedRelay.get().equals(Relay.Value.kOn)) {
+                mLedRelay.set(Relay.Value.kOff);
+            }
+            else {
+                mLedRelay.set(Relay.Value.kOn);
+            }
+            mStartTime = mCurrentTime;
 
-		}
-	}
+        }
+    }
 
 	public boolean shoot() {
-		if(!mLimitSwitch.get() && mPressureSensor.getPSI() > 60 ) { //Don't shoot unless limit switch is inactive
+		//if(!mLimitSwitch.get() && mPressureSensor.getPSI() > 60 ) { //Don't shoot unless limit switch is inactive
 			mShootRelay.set(Relay.Value.kOn);// On state.
-		}
+		//}
 		return true;
 	}
 
@@ -102,7 +101,7 @@ public class Shooter implements IModule {
 	}
 
 	public boolean isAtPressure() {
-		return pressureSensor.getPSI() < Constants.PSI_THRESHOLD;
+		return mPressureSensor.getPSI() < Constants.PSI_THRESHOLD;
 	}
 
 }

@@ -4,10 +4,6 @@ import edu.wpi.first.wpilibj.Joystick;
 import org.ilite.frc.robot.Constants;
 import org.ilite.frc.robot.sensors.PressureSensor;
 
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Relay;
-import edu.wpi.first.wpilibj.Solenoid;
-
 public class DriverControl implements IModule {
 
 	private DriveTrain drivetrain;
@@ -55,12 +51,19 @@ public class DriverControl implements IModule {
 		double left = throttle - turn;
 		double right = throttle + turn;
 		drivetrain.setSpeeds(left, -right);
-		
+
+        // Horn Button
+        if(gamepad.getRawButton(DriverInputMap.GAMEPAD_B_BUTTON))
+        {
+            horn.turnOn();
+        } else {
+            horn.turnOff();
+        }
+
 		// Fire Trigger
 		if(gamepad.getRawAxis(DriverInputMap.GAMEPAD_RIGHT_TRIGGER) > 0.5)
 		{
 			if(!hornSequenceInit) {
-				
 				hornSequenceInit = true;
 				startTime = System.currentTimeMillis();
 				endOfWarningTime = startTime + Constants.HORN_RELAY_DURATION;
@@ -70,7 +73,7 @@ public class DriverControl implements IModule {
 
 			long now = System.currentTimeMillis();
 
-			if(!horn.isSounding() && now < endOfShotTime) {
+			if(!horn.isInFiringSequence() && now < endOfShotTime) {
 				shooter.shoot();
 			} else if (now > endOfShotTime)
 			{
@@ -80,14 +83,6 @@ public class DriverControl implements IModule {
 			horn.turnOff();
 			shooter.shootRelayOff();
 			hornSequenceInit = false;
-		}
-
-		// Horn Button
-		if(gamepad.getRawButton(DriverInputMap.GAMEPAD_B_BUTTON))
-		{
-			horn.turnOn();
-		} else {
-			horn.turnOff();
 		}
 
 		// Dump Trigger
@@ -102,18 +97,11 @@ public class DriverControl implements IModule {
 		if(gamepad.getRawButton(DriverInputMap.GAMEPAD_Y_BUTTON))
 		{
 			shooter.setOutput(Constants.ELEVATION_SPEED_UP); //Move shooter up.
-		} else if(gamepad.getRawButton(DriverInputMap.GAMEPAD_A_BUTTON))
-		{
+		} else if(gamepad.getRawButton(DriverInputMap.GAMEPAD_A_BUTTON)) {
 			shooter.setOutput(Constants.ELEVATION_SPEED_DOWN);//Move shooter down.
-		} else
-		{
+		} else {
 			shooter.setOutput(0);
-		}else if(gamepad.getRawButton(GAMEPAD_X_BUTTON))	
-		{
-			if(!(gamepad.getRawButton(GAMEPAD_X_BUTTON))) {
-				
-				solenoid.set(!solenoid.get());
-			}
+		}
 
 		return false;
 	}

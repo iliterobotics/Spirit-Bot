@@ -47,8 +47,8 @@ public class Horn implements IModule{
         startTime = System.currentTimeMillis();
     }
 
-    public boolean isSounding() {
-        return hornRelay.get() == Relay.Value.kOn;
+    public boolean isInFiringSequence() {
+        return startSequence;
     }
 
 }
