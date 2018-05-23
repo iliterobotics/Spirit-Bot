@@ -20,9 +20,9 @@ public class Potentiometer
 		return (voltage / MAX_VOLTAGE) * 340 - offset;
 	}
 	
-	public void zeroAngle(double currentAngle)
+	public void zeroAngle()
 	{
-		offset = currentAngle;
+		offset = getAngle();
 	}
 
 	public double getAngle() 

@@ -52,13 +52,13 @@ public class DriverControl implements IModule {
 		double right = throttle + turn;
 		drivetrain.setSpeeds(left, -right);
 
-        // Horn Button
-        if(gamepad.getRawButton(DriverInputMap.GAMEPAD_B_BUTTON))
-        {
-            horn.turnOn();
-        } else {
-            horn.turnOff();
-        }
+		// Horn Button
+		if(gamepad.getRawButton(DriverInputMap.GAMEPAD_B_BUTTON))
+		{
+			horn.turnOn();
+		} else {
+			horn.turnOff();
+		}
 
 		// Fire Trigger
 		if(gamepad.getRawAxis(DriverInputMap.GAMEPAD_RIGHT_TRIGGER) > 0.5)
@@ -80,7 +80,6 @@ public class DriverControl implements IModule {
 				shooter.shootRelayOff();
 			}
 		} else {
-			horn.turnOff();
 			shooter.shootRelayOff();
 			hornSequenceInit = false;
 		}

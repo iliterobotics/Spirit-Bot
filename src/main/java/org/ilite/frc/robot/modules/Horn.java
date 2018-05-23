@@ -9,6 +9,8 @@ public class Horn implements IModule{
 
     private boolean startSequence;
     private long startTime, duration;
+    private Relay.Value timedState;
+    private Relay.Value desiredState;
 
     public Horn() {
         hornRelay = new Relay(Constants.RELAY_PORT_HORN);
@@ -18,6 +20,7 @@ public class Horn implements IModule{
     @Override
     public void init() {
         startSequence = false;
+        timedState = Relay.Value.kOff;
         startTime = 0;
         duration = 0;
     }
@@ -25,20 +28,26 @@ public class Horn implements IModule{
     @Override
     public boolean update() {
         if(System.currentTimeMillis() - startTime < duration && startSequence) {
-            turnOn();
+            timedState = Relay.Value.kOn;
         } else {
             startSequence = false;
-            turnOff();
+            timedState = Relay.Value.kOff;
+        }
+
+        if(startSequence) {
+            hornRelay.set(timedState);
+        } else {
+            hornRelay.set(desiredState);
         }
         return false;
     }
 
     public void turnOn() {
-        hornRelay.set(Relay.Value.kOn);
+        desiredState = Relay.Value.kOn;
     }
 
     public void turnOff() {
-        hornRelay.set(Relay.Value.kOff);
+        desiredState = Relay.Value.kOff;
     }
 
     public void sound(long time) {
