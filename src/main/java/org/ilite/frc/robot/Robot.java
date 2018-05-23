@@ -2,10 +2,7 @@
 package org.ilite.frc.robot;
 
 import edu.wpi.first.wpilibj.SampleRobot;
-import org.ilite.frc.robot.modules.DriveTrain;
-import org.ilite.frc.robot.modules.DriverControl;
-import org.ilite.frc.robot.modules.IModule;
-import org.ilite.frc.robot.modules.Shooter;
+import org.ilite.frc.robot.modules.*;
 import org.ilite.frc.robot.sensors.Potentiometer;
 import org.ilite.frc.robot.sensors.PressureSensor;
 
@@ -20,14 +17,16 @@ public class Robot extends SampleRobot {
 	private Shooter shooter;
 	private Potentiometer angleSensor;
 	private PressureSensor pressureSensor;
+	private Horn horn;
 	
 	public Robot() {
 		runningModules = new LinkedList<>();
+		horn = new Horn();
 		drivetrain = new DriveTrain();
 		angleSensor = new Potentiometer();
 	    pressureSensor = new PressureSensor();
 		shooter = new Shooter(pressureSensor, angleSensor);
-		driverControl = new DriverControl(drivetrain, shooter, pressureSensor);
+		driverControl = new DriverControl(drivetrain, shooter, pressureSensor, horn);
 	}
 	
 
@@ -37,7 +36,7 @@ public class Robot extends SampleRobot {
 
 	// This function is called once each time the robot enters teleop mode.
 	public void operatorControl() {
-		setRunningModules(drivetrain, driverControl, shooter);
+		setRunningModules(drivetrain, driverControl, shooter, horn);
 		initModules();
 		while (isOperatorControl() && isEnabled()) {
 			for(IModule m : runningModules) {
