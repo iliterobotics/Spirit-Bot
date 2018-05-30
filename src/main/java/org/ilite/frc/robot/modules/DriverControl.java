@@ -2,6 +2,7 @@ package org.ilite.frc.robot.modules;
 
 import edu.wpi.first.wpilibj.Joystick;
 import org.ilite.frc.robot.Constants;
+import org.ilite.frc.robot.sensors.Potentiometer;
 import org.ilite.frc.robot.sensors.PressureSensor;
 
 public class DriverControl implements IModule {
@@ -15,6 +16,7 @@ public class DriverControl implements IModule {
 	private boolean hornSequenceInit = false;
 	private long endOfWarningTime = -1;
 	private long endOfShotTime = -1;
+	private Potentiometer potentiometer;
 	
 	public DriverControl(DriveTrain drivetrain, Shooter shooter, PressureSensor pressureSensor, Horn horn) {
 		this.drivetrain = drivetrain;

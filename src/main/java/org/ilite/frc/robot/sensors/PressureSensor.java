@@ -13,6 +13,7 @@ public class PressureSensor implements IModule {
     private final double supplyVoltage = 5;
     private long startTime;
     private boolean ledState;
+    private double offset;
     
 	public PressureSensor() {
         aio = new AnalogInput(Constants.ANALOG_PORT_PRESSURE_SENSOR);
@@ -35,6 +36,12 @@ public class PressureSensor implements IModule {
 	{
 		double pressure = 250 * ( voltageReadout/supplyVoltage ) - 25;
 		return pressure;
+	}
+
+	public double getOffset(double PSI) {
+
+		offset = (aio.getVoltage())/(0.0004 * PSI + 0.01);
+		return offset;
 	}
 	
 

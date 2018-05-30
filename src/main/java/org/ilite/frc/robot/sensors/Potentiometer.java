@@ -27,7 +27,6 @@ public class Potentiometer
 
 	public double getAngle() 
 	{
-		System.out.println(cvtToAngle(input.getVoltage()) + "Pot reading");
 		return cvtToAngle(input.getVoltage());
 		
 	}

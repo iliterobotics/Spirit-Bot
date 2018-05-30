@@ -43,7 +43,8 @@ public class Horn implements IModule{
     }
 
     public void turnOn() {
-        desiredState = Relay.Value.kOn;
+        //desiredState = Relay.Value.kOn;
+        desiredState = Relay.Value.kOff;
     }
 
     public void turnOff() {

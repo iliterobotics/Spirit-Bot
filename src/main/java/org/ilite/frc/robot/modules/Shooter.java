@@ -43,21 +43,13 @@ public class Shooter implements IModule {
 	public boolean update() {
 		mCurrentTime = System.currentTimeMillis();
 		this.mAngle = mPot.getAngle();
-		if ((mCurrentTime - mStartTime) % 200 < 50)
+		if ((mCurrentTime - mStartTime) % 400 < 50)
 		{
-			System.out.printf("Angle: %s\n", mAngle);
+			System.out.printf("Potentiometer Angle: %s\nPressure: %s\nOffset: %s\nLimit: %s\n", mPot.getAngle(), mPressureSensor.getPSI(), mPressureSensor.getOffset(30), mLimitSwitch.get());
 		}
 		blinkLED();
 		return false;
 	}
-
-	public boolean dump() {
-		
-		//if(mPressureSensor.getPSI() < 70) {	//pressure needed to dump
-			mDumpRelay.set(Relay.Value.kOn);  // On state.
-    //}
-		return true;
-}
 
     public void blinkLED() {
         if (isAtPressure() && mCurrentTime - mStartTime > 1000) {
@@ -83,21 +75,30 @@ public class Shooter implements IModule {
 		mShootRelay.set(Relay.Value.kOff);
 	}
 
+	public boolean dump() {
+		//if(mPressureSensor.getPSI() < 70) {	//pressure needed to dump
+		mDumpRelay.set(Relay.Value.kOn);  // On state.
+		//}
+		return true;
+	}
+
 	public void dumpRelayOff() {
 		mDumpRelay.set(Relay.Value.kOff);
 	}
 
 	public void setOutput(double output) {
-		double threshold = 5;
 //		
 //		  if( Math.abs(angle - Constants.POT_LIMIT_1) < threshold || Math.abs(angle -
 //		  Constants.POT_LIMIT_2) < threshold) { elevateMotor.set(0); }
-//		 
-		if ((!mLimitSwitch.get()) && output > 0) {
-			mElevateMotor.set(0);
-		} else {
-			mElevateMotor.set(output);
+//
+		if(isDown()) {
+			if(output > 0) output = 0;
 		}
+		mElevateMotor.set(output);
+	}
+
+	public boolean isDown() {
+		return !mLimitSwitch.get();
 	}
 
 	public boolean isAtPressure() {
