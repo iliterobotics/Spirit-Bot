@@ -63,7 +63,7 @@ public class DriverControl implements IModule {
 		}
 
 		// Fire Trigger
-		if(gamepad.getRawAxis(DriverInputMap.GAMEPAD_RIGHT_TRIGGER) > 0.5)
+		if(gamepad.getRawAxis(DriverInputMap.GAMEPAD_RIGHT_TRIGGER) > 0.5 && shooter.isAtShootingPressure())
 		{
 			if(!hornSequenceInit) {
 				hornSequenceInit = true;

@@ -22,13 +22,17 @@ public class Potentiometer
 	
 	public void zeroAngle()
 	{
-		offset = getAngle();
+		offset =(input.getVoltage() / MAX_VOLTAGE) * 340;
 	}
 
 	public double getAngle() 
 	{
-		return cvtToAngle(input.getVoltage());
+		return -cvtToAngle(input.getVoltage());
 		
+	}
+
+	public double getVoltage() {
+		return input.getVoltage();
 	}
 	
 }

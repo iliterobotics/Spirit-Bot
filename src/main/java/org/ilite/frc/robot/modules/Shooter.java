@@ -43,16 +43,18 @@ public class Shooter implements IModule {
 	public boolean update() {
 		mCurrentTime = System.currentTimeMillis();
 		this.mAngle = mPot.getAngle();
-		if ((mCurrentTime - mStartTime) % 400 < 50)
+		if(isDown()) mPot.zeroAngle();
+		if ((mCurrentTime - mStartTime) > 100)
 		{
-			System.out.printf("Potentiometer Angle: %s\nPressure: %s\nOffset: %s\nLimit: %s\n", mPot.getAngle(), mPressureSensor.getPSI(), mPressureSensor.getOffset(30), mLimitSwitch.get());
+			mStartTime = System.currentTimeMillis();
+			System.out.printf("Potentiometer Angle: %s\nPressure: %s\nOffset: %s\n", mPot.getAngle(), mPressureSensor.getPSI(), mPressureSensor.getOffset(30));
 		}
 		blinkLED();
 		return false;
 	}
 
     public void blinkLED() {
-        if (isAtPressure() && mCurrentTime - mStartTime > 1000) {
+        if (isAtShootingPressure() && mCurrentTime - mStartTime > 300) {
             if (mLedRelay.get().equals(Relay.Value.kOn)) {
                 mLedRelay.set(Relay.Value.kOff);
             }
@@ -65,9 +67,8 @@ public class Shooter implements IModule {
     }
 
 	public boolean shoot() {
-		//if(!mLimitSwitch.get() && mPressureSensor.getPSI() > 60 ) { //Don't shoot unless limit switch is inactive
+		//if(!mLimitSwitch.get()) { //Don't shoot unless limit switch is inactive
 			mShootRelay.set(Relay.Value.kOn);// On state.
-		//}
 		return true;
 	}
 
@@ -101,8 +102,8 @@ public class Shooter implements IModule {
 		return !mLimitSwitch.get();
 	}
 
-	public boolean isAtPressure() {
-		return mPressureSensor.getPSI() < Constants.PSI_THRESHOLD;
+	public boolean isAtShootingPressure() {
+		return mPressureSensor.getPSI() > Constants.PSI_THRESHOLD;
 	}
 
 }

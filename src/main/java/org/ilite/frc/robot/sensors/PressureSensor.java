@@ -9,7 +9,6 @@ public class PressureSensor implements IModule {
 	//public static final double PSI_PER_VOLTAGE = 1;
     
 	private AnalogInput aio;
-    private double voltageReadout;
     private final double supplyVoltage = 5;
     private long startTime;
     private boolean ledState;
@@ -25,16 +24,13 @@ public class PressureSensor implements IModule {
 	}
 	
 	public boolean update() {
-		
-		
-		voltageReadout = aio.getVoltage();
 		return true;
 	}
 	
 	
 	public double getPSI()
 	{
-		double pressure = 250 * ( voltageReadout/supplyVoltage ) - 25;
+		double pressure = 250 * ( aio.getVoltage()/supplyVoltage ) - 25;
 		return pressure;
 	}
 
