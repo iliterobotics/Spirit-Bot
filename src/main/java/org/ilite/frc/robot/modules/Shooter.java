@@ -67,6 +67,7 @@ public class Shooter implements IModule {
     }
 
 	public boolean shoot() {
+		// TODO Limit switch safety
 		//if(!mLimitSwitch.get()) { //Don't shoot unless limit switch is inactive
 			mShootRelay.set(Relay.Value.kOn);// On state.
 		return true;
@@ -88,7 +89,7 @@ public class Shooter implements IModule {
 	}
 
 	public void setOutput(double output) {
-//		
+//		TODO Angle limit for shooting
 //		  if( Math.abs(angle - Constants.POT_LIMIT_1) < threshold || Math.abs(angle -
 //		  Constants.POT_LIMIT_2) < threshold) { elevateMotor.set(0); }
 //
@@ -103,7 +104,9 @@ public class Shooter implements IModule {
 	}
 
 	public boolean isAtShootingPressure() {
-		return mPressureSensor.getPSI() > Constants.PSI_THRESHOLD;
+		// TODO Pressure threshold for shot
+//		return mPressureSensor.getPSI() > Constants.PSI_THRESHOLD;
+		return true;
 	}
 
 }
