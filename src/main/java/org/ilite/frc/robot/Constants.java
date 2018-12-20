@@ -5,10 +5,10 @@ public class Constants {
     /**
      * Relays
      */
-    public static final int RELAY_PORT_SHOOTER = 1;
-    public static final int RELAY_PORT_DUMP = 2;
-    public static final int RELAY_PORT_LED = 3;
-    public static final int RELAY_PORT_HORN = 0;
+    public static final int RELAY_PORT_SHOOTER = 2;
+    public static final int RELAY_PORT_DUMP = 1;
+    public static final int RELAY_PORT_LED = 0;
+    public static final int RELAY_PORT_HORN = 3;
 
     /**
      * PWM Outputs
