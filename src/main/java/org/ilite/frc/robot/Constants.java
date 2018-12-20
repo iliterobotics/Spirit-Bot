@@ -28,8 +28,8 @@ public class Constants {
      * Shooter
      */
     public static final double PSI_THRESHOLD = 45;
-    public static final double ELEVATION_SPEED_DOWN = 0.3;
-    public static final double ELEVATION_SPEED_UP = -0.4;
+    public static final double ELEVATION_SPEED_DOWN = 0.7;
+    public static final double ELEVATION_SPEED_UP = -0.8;
     public static long SHOOTER_RELAY_DURATION = 450;
 
     /**
