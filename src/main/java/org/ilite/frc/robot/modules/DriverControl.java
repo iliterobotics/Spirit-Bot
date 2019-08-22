@@ -5,6 +5,8 @@ import org.ilite.frc.robot.Constants;
 import org.ilite.frc.robot.sensors.Potentiometer;
 import org.ilite.frc.robot.sensors.PressureSensor;
 
+import java.sql.Driver;
+
 public class DriverControl implements IModule {
 
 	private DriveTrain drivetrain;
@@ -49,11 +51,11 @@ public class DriverControl implements IModule {
 	*/
 	public boolean update() {
 
-		double throttle = gamepad.getRawAxis(DriverInputMap.GAMEPAD_LEFT_Y);
-		double turn = gamepad.getRawAxis(DriverInputMap.GAMEPAD_RIGHT_X) / 2;
-		double left = throttle - turn;
-		double right = throttle + turn;
-		drivetrain.setSpeeds(left, -right);
+//		double throttle = gamepad.getRawAxis(DriverInputMap.GAMEPAD_LEFT_Y);
+//		double turn = gamepad.getRawAxis(DriverInputMap.GAMEPAD_RIGHT_X) / 2;
+		double left = gamepad.getRawAxis(DriverInputMap.GAMEPAD_LEFT_Y);
+		double right = gamepad.getRawAxis( DriverInputMap.GAMEPAD_RIGHT_Y );
+		drivetrain.setSpeeds(left, right);
 
 		// Horn Button
 		if(gamepad.getRawButton(DriverInputMap.GAMEPAD_B_BUTTON))
