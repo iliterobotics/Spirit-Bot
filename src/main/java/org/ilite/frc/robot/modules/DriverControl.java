@@ -54,7 +54,7 @@ public class DriverControl implements IModule {
 		double left = throttle - turn;
 		double right = throttle + turn;
 		drivetrain.setSpeeds(left, -right);
-
+		
 		// Horn Button
 		if(gamepad.getRawButton(DriverInputMap.GAMEPAD_B_BUTTON))
 		{
@@ -64,24 +64,25 @@ public class DriverControl implements IModule {
 		}
 
 		// Fire Trigger
-		if(gamepad.getRawAxis(DriverInputMap.GAMEPAD_RIGHT_TRIGGER) > 0.5 && shooter.isAtShootingPressure())
+		if(gamepad.getRawAxis(DriverInputMap.GAMEPAD_RIGHT_TRIGGER) > 0.)
 		{
-			if(!hornSequenceInit) {
-				hornSequenceInit = true;
-				startTime = System.currentTimeMillis();
-				endOfWarningTime = startTime + Constants.HORN_RELAY_DURATION;
-				endOfShotTime = endOfWarningTime + Constants.SHOOTER_RELAY_DURATION;
-				horn.sound(Constants.HORN_RELAY_DURATION);
-			}
+			// if(!hornSequenceInit) {
+			// 	hornSequenceInit = true;
+			// 	startTime = System.currentTimeMillis();
+			// 	endOfWarningTime = startTime + Constants.HORN_RELAY_DURATION;
+			// 	endOfShotTime = endOfWarningTime + Constants.SHOOTER_RELAY_DURATION;
+			// 	horn.sound(Constants.HORN_RELAY_DURATION);
+			// }
 
-			long now = System.currentTimeMillis();
+			// long now = System.currentTimeMillis();
 
-			if(!horn.isInFiringSequence() && now < endOfShotTime) {
-				shooter.shoot();
-			} else if (now > endOfShotTime)
-			{
-				shooter.shootRelayOff();
-			}
+			// if(!horn.isInFiringSequence() && now < endOfShotTime) {
+			// 	shooter.shoot();
+			// } else if (now > endOfShotTime)
+			// {
+			// 	shooter.shootRelayOff();
+			// }
+			shooter.shoot();
 		} else {
 			shooter.shootRelayOff();
 			hornSequenceInit = false;
